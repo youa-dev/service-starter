@@ -1,0 +1,77 @@
+{
+  "name": "ts-node-boilerplate",
+  "version": "1.0.0",
+  "description": "Node API boilerplate built with TypeScript, Express and MongoDB",
+  "main": "dist/bin/start.js",
+  "scripts": {
+    "scss": "node-sass public/scss -o public/css",
+    "scss:watch": "node-sass --watch public/scss -o public/css",
+    "compile": "tsc",
+    "prestart": "npm run scss && npm run compile",
+    "start": "node .",
+    "start:process": "pm2 start .",
+    "dev": "npm run scss && ts-node-dev src/bin/start.ts",
+    "pretest": "npm run start:process",
+    "posttest": "pm2 del 0",
+    "test": "npm run compile && mocha dist/tests/*.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/denis-onder/ts-node-api-boilerplate.git"
+  },
+  "keywords": [
+    "Node",
+    "Express",
+    "TypeScript",
+    "MongoDB"
+  ],
+  "author": "Denis Onder",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/denis-onder/ts-node-api-boilerplate/issues"
+  },
+  "homepage": "https://github.com/denis-onder/ts-node-api-boilerplate#readme",
+  "dependencies": {
+    "axios": "^0.19.1",
+    "bcrypt": "^3.0.7",
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-handlebars": "^3.1.0",
+    "helmet": "^3.21.3",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.4",
+    "morgan": "^1.9.1",
+    "passport": "^0.4.1",
+    "passport-google-oauth": "^2.0.0",
+    "passport-jwt": "^4.0.0",
+    "showdown": "^1.9.1"
+  },
+  "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/bcrypt": "^3.0.0",
+    "@types/body-parser": "^1.19.0",
+    "@types/chai": "^4.2.11",
+    "@types/dotenv": "^8.2.0",
+    "@types/express": "^4.17.3",
+    "@types/express-handlebars": "^3.1.0",
+    "@types/helmet": "0.0.45",
+    "@types/jsonwebtoken": "^8.3.8",
+    "@types/mocha": "^5.2.7",
+    "@types/mongoose": "^5.7.7",
+    "@types/morgan": "^1.9.0",
+    "@types/node": "^12.12.30",
+    "@types/passport": "^1.0.3",
+    "@types/passport-google-oauth": "^1.0.41",
+    "@types/passport-jwt": "^3.0.3",
+    "@types/showdown": "^1.9.3",
+    "@types/uuid": "^3.4.8",
+    "chai": "^4.2.0",
+    "mocha": "^6.2.2",
+    "node-sass": "^4.13.0",
+    "pm2": "^4.2.1",
+    "ts-node-dev": "^1.0.0-pre.44",
+    "tslint": "^5.20.1",
+    "typescript": "^3.8.3"
+  }
+}

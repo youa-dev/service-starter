@@ -1,0 +1,7 @@
+/public/css
+/node_modules
+/dist
+/logs
+.env
+.vscode
+.coverage

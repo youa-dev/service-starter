@@ -1,0 +1,68 @@
+#info {
+  transform: translateX(200%);
+  transition: $transition;
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  background-color: $black;
+  color: white;
+  padding: 1em;
+  border-radius: 5px;
+  -webkit-box-shadow: 0px 0px 10px -3px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 0px 10px -3px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 10px -3px rgba(0, 0, 0, 0.75);
+  div {
+    display: inline-block;
+    background-color: #fff;
+    width: 22px;
+    height: 22px;
+    color: $black;
+    text-align: center;
+    border-radius: 3px;
+    font-weight: bold;
+  }
+}
+
+#info_reminder {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  background: transparent;
+  color: $gray;
+  font-size: 18px;
+  text-align: right;
+  div {
+    display: inline-block;
+    background-color: $gray;
+    width: 22px;
+    height: 22px;
+    color: white;
+    text-align: center;
+    border-radius: 3px;
+    font-weight: bold;
+  }
+  span {
+    cursor: pointer;
+    transition: $transition;
+    border-bottom: 1px solid transparent;
+    &:hover {
+      color: $blue;
+      border-bottom-color: $blue;
+    }
+  }
+}
+
+.reveal {
+  opacity: 1;
+  animation: revealInfo 0.3s;
+  animation-fill-mode: both;
+}
+
+@keyframes revealInfo {
+  0% {
+    transform: translateX(200%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}

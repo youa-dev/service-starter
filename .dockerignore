@@ -1,0 +1,11 @@
+/public/css
+/node_modules
+/dist
+/logs
+example.env
+README.md
+Dockerfile
+.vscode
+.coverage
+.gitignore
+
