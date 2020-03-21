@@ -1,7 +1,7 @@
 {
-  "name": "ts-node-boilerplate",
+  "name": "youa.dev-auth-service",
   "version": "1.0.0",
-  "description": "Node API boilerplate built with TypeScript, Express and MongoDB",
+  "description": "Authentication Service built with Node.js, Express, TypeScript and MongoDB",
   "main": "dist/bin/start.js",
   "scripts": {
     "compile": "tsc",
