@@ -7,11 +7,9 @@
     "compile": "tsc",
     "prestart": "npm run compile",
     "start": "node .",
-    "start:process": "pm2 start .",
     "dev": "ts-node-dev src/bin/start.ts",
-    "pretest": "npm run start:process",
-    "posttest": "pm2 del 0",
-    "test": "npm run compile && env NODE_ENV=test mocha dist/tests/*.test.js"
+    "pretest": "npm run compile",
+    "test": "env NODE_ENV=test mocha dist/tests/*.test.js"
   },
   "repository": {
     "type": "git",
@@ -67,7 +65,6 @@
     "mocha": "^6.2.2",
     "mongodb-memory-server": "^6.4.1",
     "node-sass": "^4.13.0",
-    "pm2": "^4.2.1",
     "ts-node-dev": "^1.0.0-pre.44",
     "tslint": "^5.20.1",
     "typescript": "^3.8.3"

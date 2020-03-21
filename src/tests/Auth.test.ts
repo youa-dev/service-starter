@@ -1,4 +1,5 @@
 import { expect } from "chai";
+import server from "../Server";
 import apiTester from "../utils/apiTester";
 
 // Token placeholder
@@ -20,7 +21,14 @@ const editedAccount = {
   confirm_password: "12345test"
 };
 
-describe("Example test", () => {
+before(done => {
+  server.start();
+  done();
+});
+
+after(server.stop);
+
+describe("Authentication controller", () => {
   describe("Registration", () => {
     it("should return the user object", async () => {
       const res = await apiTester("post", "/api/auth/register", testingAccount);
