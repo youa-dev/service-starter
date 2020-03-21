@@ -27,3 +27,8 @@ export interface IUser extends Document {
 export interface IRequest extends Request {
   user?: IUser;
 }
+
+export interface IConnectionArguments {
+  uris?: string;
+  options?: object;
+}
