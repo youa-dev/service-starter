@@ -44,10 +44,4 @@ describe("Authentication controller", () => {
       );
     });
   });
-  describe("Delete", () => {
-    it("should return an object with the deleted and timestamp props", async () => {
-      const res = await apiTester("delete", "/api/auth/delete", null, token);
-      expect(res.data).to.include.all.keys("deleted", "timestamp");
-    });
-  });
 });
