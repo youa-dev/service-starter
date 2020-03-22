@@ -2,6 +2,7 @@ import { editedAccount, testProfile, testingKeys } from "./testingUtils";
 import { expect } from "chai";
 import apiTester from "../utils/apiTester";
 
+// Token placeholder
 let token;
 
 describe("Profile controller", () => {

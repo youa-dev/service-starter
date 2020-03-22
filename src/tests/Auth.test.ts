@@ -26,11 +26,13 @@ describe("Authentication controller", () => {
   describe("Get current user", () => {
     it("should return all non-sensitive user information", async () => {
       const res = await apiTester("get", "/api/auth/me", null, token);
-      expect(res.data).to.include.all.keys(...testingKeys.auth);
+      expect(res.data).to.include.all.keys(
+        ...testingKeys.auth.map(v => v.replace("_id", "id"))
+      );
     });
   });
   describe("Edit", () => {
-    it("should return the edited user's object", async () => {
+    it("should return the edited user object", async () => {
       const res = await apiTester(
         "put",
         "/api/auth/edit",

@@ -32,11 +32,6 @@ export const editedAccount = {
   confirm_password: "12345test"
 };
 
-export const testCaseUser = {
-  email: "denis@youa.dev",
-  password: "test12345"
-};
-
 export const testProfile = {
   website: "https://denisonder.xyz/",
   github: "https://github.com/denis-onder/",
