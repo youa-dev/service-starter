@@ -1,36 +1,17 @@
 import { expect } from "chai";
 import apiTester from "../utils/apiTester";
+import { testingAccount, editedAccount, testingKeys } from "./testingUtils";
 
 // Token placeholder
 let token;
-
-const testingAccount = {
-  first_name: "Test",
-  last_name: "Account",
-  email: "test_account@example.com",
-  password: "test12345",
-  confirm_password: "test12345"
-};
-
-const editedAccount = {
-  first_name: "Edited",
-  last_name: "Account",
-  email: "edited_account@example.com",
-  password: "12345test",
-  confirm_password: "12345test"
-};
 
 describe("Authentication controller", () => {
   describe("Registration", () => {
     it("should return the user object", async () => {
       const res = await apiTester("post", "/api/auth/register", testingAccount);
       expect(res.data).to.include.all.keys(
-        "_id",
-        "first_name",
-        "last_name",
-        "email",
+        ...testingKeys.auth,
         "password",
-        "createdAt",
         "__v"
       );
     });
@@ -45,13 +26,7 @@ describe("Authentication controller", () => {
   describe("Get current user", () => {
     it("should return all non-sensitive user information", async () => {
       const res = await apiTester("get", "/api/auth/me", null, token);
-      expect(res.data).to.include.all.keys(
-        "id",
-        "first_name",
-        "last_name",
-        "email",
-        "createdAt"
-      );
+      expect(res.data).to.include.all.keys(...testingKeys.auth);
     });
   });
   describe("Edit", () => {
@@ -63,12 +38,8 @@ describe("Authentication controller", () => {
         token
       );
       expect(res.data).to.include.all.keys(
-        "_id",
-        "first_name",
-        "last_name",
-        "email",
+        ...testingKeys.auth,
         "password",
-        "createdAt",
         "__v"
       );
     });
