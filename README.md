@@ -1,16 +1,15 @@
-# TypeScript Node API Boilerplate
+## youa.dev
+### User Service
 
-[Click here](https://github.com/denis-onder/ts-node-api-boilerplate/blob/master/DOCS.md) to check out the documentation.
+---
+
+[Click here](https://github.com/denis-onder/ts-node-api-boilerplate/blob/master/DOCS.md) to check out the documentation of the boilerplate used for this service.
 
 ---
 
 ### About:
 
-This boilerplate has been made to speed up the early stage of the development process, like setting up a basic server and wiring up all the common packages necessary for API/full-stack web application development.
-
-Design pattern wise, this boilerplate had MVC in mind.
-
-It's written to be used with TypeScript and Express. The database solution used here is MongoDB, which uses Mongoose as it's layer of communication. This can, however, easily be changed.
+This service handles user account and profile creation, editing, authorization, authentication and everything related.
 
 ---
 
