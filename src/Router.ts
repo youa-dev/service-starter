@@ -1,14 +1,10 @@
 import express from "express";
 import passport from "passport";
 import AuthController from "./controllers/Auth.controller";
+import ProfileController from "./controllers/Profile.controller";
 import validateInput from "./middleware/validateInput";
 
 class Router {
-  /**
-   * We are instantiating two separate routers here.
-   * This is done for easier endpoint management,
-   * and for logic separation
-   */
   public API_ROUTER = express.Router();
   constructor() {
     this.setAPIEndpoints();
@@ -55,6 +51,11 @@ class Router {
         failureRedirect: "/login"
       }),
       AuthController.generateJWTfromOAuth
+    );
+    this.API_ROUTER.post(
+      "/profile/create",
+      passport.authenticate("jwt", { session: false }),
+      ProfileController.create
     );
   }
 }

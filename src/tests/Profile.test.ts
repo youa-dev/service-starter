@@ -21,14 +21,34 @@ const testProfile = {
   biography: "eternal coding noob"
 };
 
+const testingKeys = {
+  profile: [
+    "_id",
+    "website",
+    "github",
+    "linkedin",
+    "dev",
+    "stackoverflow",
+    "biography",
+    "followers",
+    "handle",
+    "createdAt",
+    "__v"
+  ]
+};
+
+// Create a test-case user, then log the user in
+before(async done => {
+  await apiTester("post", "/api/auth/register", testingAccount);
+  const { data } = await apiTester("post", "/api/auth/login", testingAccount);
+  token = data.token;
+  done();
+});
+
+// Delete the test user once done with testing
+after(async () => await apiTester("delete", "/api/auth/delete", null, token));
+
 describe("Profile controller", () => {
-  // Create a test-case user, then log the user in
-  before(async done => {
-    await apiTester("post", "/api/auth/register", testingAccount);
-    const { data } = await apiTester("post", "/api/auth/login", testingAccount);
-    token = data.token;
-    done();
-  });
   describe("Create profile", () => {
     it("should return the profile object", async () => {
       const res = await apiTester(
@@ -37,19 +57,7 @@ describe("Profile controller", () => {
         testProfile,
         token
       );
-      expect(res.data).to.include.all.keys(
-        "_id",
-        "website",
-        "github",
-        "linkedin",
-        "dev",
-        "stackoverflow",
-        "biography",
-        "followers",
-        "handle",
-        "createdAt",
-        "__v"
-      );
+      expect(res.data).to.include.all.keys(...testingKeys.profile);
     });
   });
   // describe("Get profile using handle", () => {
@@ -64,6 +72,4 @@ describe("Profile controller", () => {
   // describe("Delete profile", () => {
   //   it("should return an object with the deleted and timestamp props", async () => {});
   // });
-  // Delete the test user once done with testing
-  after(async () => await apiTester("delete", "/api/auth/delete", null, token));
 });
