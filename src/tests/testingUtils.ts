@@ -40,3 +40,12 @@ export const testProfile = {
   stackoverflow: "https://stackoverflow.com/users/11813625/denis-onder",
   biography: "eternal coding noob"
 };
+
+export const editedProfile = {
+  website: "https://example.com/",
+  github: "https://example.com/",
+  linkedin: "https://example.com/",
+  dev: "https://example.com/",
+  stackoverflow: "https://example.com/",
+  biography: "Example"
+};
