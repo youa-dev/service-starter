@@ -27,7 +27,7 @@ describe("Authentication controller", () => {
     it("should return all non-sensitive user information", async () => {
       const res = await apiTester("get", "/auth/me", null, token);
       expect(res.data).to.include.all.keys(
-        ...testingKeys.auth.map(v => v.replace("_id", "id"))
+        ...testingKeys.auth.map(v => v.replace("_id", "id"), "profile")
       );
     });
   });

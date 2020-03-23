@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { IUser, IRequest } from "../interfaces";
 import { compareSync } from "bcrypt";
 import User from "../db/models/User.model";
+import Profile from "../db/models/Profile.model";
 import CustomException from "../helpers/CustomException";
 import hashPassword from "../helpers/hashPassword";
 import generateToken from "../helpers/generateToken";
@@ -50,14 +51,16 @@ class AuthController {
       return res.status(err.status || 500).json(err.message || err);
     }
   }
-  public getCurrentUser(req: IRequest, res: Response) {
+  public async getCurrentUser(req: IRequest, res: Response) {
     const { id, email, firstName, lastName, createdAt } = req.user;
+    const profile = await Profile.findOne({ userID: id });
     return res.status(200).json({
       id,
       email,
       firstName,
       lastName,
-      createdAt
+      createdAt,
+      profile
     });
   }
   public async edit(req: IRequest, res: Response) {
