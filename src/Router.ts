@@ -13,25 +13,21 @@ class Router {
   }
   private setAuthEndpoints(): void {
     // Your API endpoints go here
-    this.AUTH_ROUTER.post(
-      "/auth/register",
-      validateInput,
-      AuthController.register
-    );
-    this.AUTH_ROUTER.post("/auth/login", validateInput, AuthController.login);
+    this.AUTH_ROUTER.post("/register", validateInput, AuthController.register);
+    this.AUTH_ROUTER.post("/login", validateInput, AuthController.login);
     this.AUTH_ROUTER.get(
-      "/auth/me",
+      "/me",
       passport.authenticate("jwt", { session: false }),
       AuthController.getCurrentUser
     );
     this.AUTH_ROUTER.put(
-      "/auth/edit",
+      "/edit",
       passport.authenticate("jwt", { session: false }),
       validateInput,
       AuthController.edit
     );
     this.AUTH_ROUTER.delete(
-      "/auth/delete",
+      "/delete",
       passport.authenticate("jwt", { session: false }),
       AuthController.delete
     );
@@ -41,8 +37,8 @@ class Router {
       passport.authenticate("google", {
         session: false,
         scope: [
-          "https://www.googleapis.com/auth/userinfo.profile",
-          "https://www.googleapis.com/auth/userinfo.email"
+          "https://www.googleapis.com/userinfo.profile",
+          "https://www.googleapis.com/userinfo.email"
         ]
       })
     );
@@ -57,26 +53,23 @@ class Router {
   }
   private setProfileEndpoints(): void {
     this.PROFILE_ROUTER.post(
-      "/profile/create",
+      "/create",
       passport.authenticate("jwt", { session: false }),
       ProfileController.createProfile
     );
-    this.PROFILE_ROUTER.get(
-      "/profile/get/:handle",
-      ProfileController.getProfile
-    );
+    this.PROFILE_ROUTER.get("/get/:handle", ProfileController.getProfile);
     this.PROFILE_ROUTER.put(
-      "/profile/edit",
+      "/edit",
       passport.authenticate("jwt", { session: false }),
       ProfileController.editProfile
     );
     this.PROFILE_ROUTER.patch(
-      "/profile/follow/:handle",
+      "/follow/:handle",
       passport.authenticate("jwt", { session: false }),
       ProfileController.followProfile
     );
     this.PROFILE_ROUTER.delete(
-      "/profile/delete",
+      "/delete",
       passport.authenticate("jwt", { session: false }),
       ProfileController.deleteProfile
     );

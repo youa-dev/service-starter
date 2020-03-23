@@ -14,12 +14,12 @@ let handle;
 describe("Profile controller", () => {
   describe("Create profile", () =>
     it("should return the profile object", async () => {
-      const login = await apiTester("post", "/api/auth/login", editedAccount);
+      const login = await apiTester("post", "/auth/login", editedAccount);
       expect(login.data).to.include.all.keys("loggedIn", "token");
       token = login.data.token;
       const res = await apiTester(
         "post",
-        "/api/profile/create",
+        "/profile/create",
         testProfile,
         token
       );
@@ -38,12 +38,7 @@ describe("Profile controller", () => {
     }));
   describe("Edit profile", () =>
     it("should return the edited profile object", async () => {
-      const res = await apiTester(
-        "put",
-        "/api/profile/edit",
-        editedProfile,
-        token
-      );
+      const res = await apiTester("put", "/profile/edit", editedProfile, token);
       expect(res.data).to.include.all.keys(...testingKeys.profile);
     }));
   describe("Follow/Unfollow profile", () =>
@@ -58,7 +53,7 @@ describe("Profile controller", () => {
     }));
   describe("Delete profile", () =>
     it("should return an object with the deleted and timestamp props", async () => {
-      const res = await apiTester("delete", "/api/profile/delete", null, token);
+      const res = await apiTester("delete", "/profile/delete", null, token);
       expect(res.data).to.include.all.keys("deleted", "timestamp");
     }));
 });
@@ -66,6 +61,6 @@ describe("Profile controller", () => {
 describe("Authentication Controller Continutation: Flow Break", () =>
   describe("Delete account", () =>
     it("should return an object with the deleted and timestamp props", async () => {
-      const res = await apiTester("delete", "/api/auth/delete", null, token);
+      const res = await apiTester("delete", "/auth/delete", null, token);
       expect(res.data).to.include.all.keys("deleted", "timestamp");
     })));
