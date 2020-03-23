@@ -14,7 +14,8 @@ const { server, db, google } = {
     config: {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      useCreateIndex: true
+      useCreateIndex: true,
+      useFindAndModify: false
     }
   },
   google: {

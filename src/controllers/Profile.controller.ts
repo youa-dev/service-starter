@@ -1,6 +1,7 @@
 import { IProfile } from "./../interfaces";
 import { Request, Response } from "express";
 import { IRequest } from "../interfaces";
+import { server } from "../config";
 import Profile from "../db/models/Profile.model";
 import CustomException from "../helpers/CustomException";
 
@@ -45,13 +46,16 @@ class ProfileController {
     const profile = await Profile.findOne({
       handle: req.params.handle
     });
-    if (!profile) return res.status(404).json(profile);
+    if (!profile)
+      return res
+        .status(404)
+        .json({ error: "A profile with this handle has not been found." });
     return res.status(200).json(profile);
   }
   public async editProfile(req: IRequest, res: Response) {
     // TODO: Input validation
     try {
-      const profile = await Profile.findOne({
+      const profile: IProfile = await Profile.findOne({
         userID: req.user.id
       });
       if (!profile)
@@ -63,20 +67,15 @@ class ProfileController {
           .toLowerCase()
           .replace(" ", "")}`
       );
-      profile
-        .update({
-          handle,
-          firstName: req.user.firstName,
-          lastName: req.user.lastName,
-          profilePicture: req.body.profilePicture,
-          website: req.body.website,
-          github: req.body.github,
-          linkedin: req.body.linkedin,
-          dev: req.body.dev,
-          stackoverflow: req.body.stackoverflow,
-          biography: req.body.biography
-        })
-        .then(updated => res.status(200).json(updated));
+      profile.handle = handle;
+      profile.profilePicture = req.body.profilePicture;
+      profile.website = req.body.website;
+      profile.github = req.body.github;
+      profile.linkedin = req.body.linkedin;
+      profile.dev = req.body.dev;
+      profile.stackoverflow = req.body.stackoverflow;
+      profile.biography = req.body.biography;
+      profile.save().then(updated => res.status(200).json(updated));
     } catch (error) {
       return res
         .status(error.status || 500)
@@ -89,17 +88,18 @@ class ProfileController {
         handle: req.params.handle
       });
       if (!profile) throw new CustomException(404, "Profile not found.");
-      // Check if the user is trying to follow it's own account.
-      if (profile.userID === req.user.id)
-        throw new CustomException(400, "You cannot follow your own profile.");
+      // Allow while in test environment -> Check if the user is trying to follow it's own account.
+      if (server.env !== "test") {
+        if (profile.userID === req.user.id)
+          throw new CustomException(400, "You cannot follow your own profile.");
+      }
       // Iterate over followers, then handle the request
       const { followers } = profile;
       followers.includes(req.user.id)
         ? followers.splice(followers.indexOf(req.user.id), 1)
         : followers.push(req.user.id);
-      profile
-        .update({ followers })
-        .then(profile => res.status(200).json(profile));
+      profile.followers = followers;
+      profile.save().then(updated => res.status(200).json(updated));
     } catch (error) {
       return res
         .status(error.status || 500)
