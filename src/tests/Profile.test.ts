@@ -35,6 +35,7 @@ describe("Profile controller", () => {
     it("should return the edited profile object", async () => {
       const res = await apiTester("put", "/profile/edit", editedProfile, token);
       expect(res.data).to.include.all.keys(...testingKeys.profile);
+      handle = res.data.handle;
     }));
   describe("Follow/Unfollow profile", () =>
     it("should return the profile that is being followed/unfollowed", async () => {

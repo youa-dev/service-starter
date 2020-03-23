@@ -84,6 +84,7 @@ class ProfileController {
   }
   public async followProfile(req: IRequest, res: Response) {
     try {
+      const filterFollowers = (v: string, i: number) => v !== req.user.id;
       const profile: IProfile = await Profile.findOne({
         handle: req.params.handle
       });
@@ -95,10 +96,9 @@ class ProfileController {
       }
       // Iterate over followers, then handle the request
       const { followers } = profile;
-      followers.includes(req.user.id)
-        ? followers.splice(followers.indexOf(req.user.id), 1)
-        : followers.push(req.user.id);
-      profile.followers = followers;
+      profile.followers = followers.includes(req.user.id)
+        ? followers.filter(filterFollowers)
+        : [...followers, req.user.id];
       profile.save().then(updated => res.status(200).json(updated));
     } catch (error) {
       return res

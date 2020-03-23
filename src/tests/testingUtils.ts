@@ -47,5 +47,7 @@ export const editedProfile = {
   linkedin: "https://example.com/",
   dev: "https://example.com/",
   stackoverflow: "https://example.com/",
-  biography: "Example"
+  biography: "Example",
+  profilePicture:
+    "https://image.freepik.com/free-icon/male-user-shadow_318-34042.png"
 };
