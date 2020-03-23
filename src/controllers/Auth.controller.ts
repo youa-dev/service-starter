@@ -10,13 +10,13 @@ import registerUser from "../helpers/registerUser";
 class AuthController {
   public async register(req: Request, res: Response) {
     try {
-      const { first_name, last_name, email, password } = req.body;
+      const { firstName, lastName, email, password } = req.body;
       const user: IUser = await User.findOne({ email });
       if (user) throw new CustomException(403, "This email is already in use.");
       // Create user
       registerUser(
         email,
-        { givenName: first_name, familyName: last_name },
+        { givenName: firstName, familyName: lastName },
         password,
         false,
         (err, user) => {
@@ -51,12 +51,12 @@ class AuthController {
     }
   }
   public getCurrentUser(req: IRequest, res: Response) {
-    const { id, email, first_name, last_name, createdAt } = req.user;
+    const { id, email, firstName, lastName, createdAt } = req.user;
     return res.status(200).json({
       id,
       email,
-      first_name,
-      last_name,
+      firstName,
+      lastName,
       createdAt
     });
   }
@@ -64,10 +64,10 @@ class AuthController {
     try {
       const user: IUser = await User.findById(req.user.id);
       if (!user) throw new CustomException(404, "User not found.");
-      const { first_name, last_name, email, password } = req.body;
+      const { firstName, lastName, email, password } = req.body;
       // Edit user
-      user.first_name = first_name;
-      user.last_name = last_name;
+      user.firstName = firstName;
+      user.lastName = lastName;
       user.email = email;
       user.password = hashPassword(password);
       // Save and return

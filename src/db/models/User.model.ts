@@ -2,11 +2,11 @@ import { Schema } from "mongoose";
 import generator from "./model.generator";
 
 const schema = new Schema({
-  first_name: {
+  firstName: {
     type: String,
     required: true
   },
-  last_name: {
+  lastName: {
     type: String,
     required: true
   },

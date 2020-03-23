@@ -1,12 +1,12 @@
 import jwt from "jsonwebtoken";
 import { server } from "../config";
 
-export default ({ _id: id, email, first_name, last_name, createdAt }: any) => {
+export default ({ _id: id, email, firstName, lastName, createdAt }: any) => {
   const payload = {
     id,
     email,
-    first_name,
-    last_name,
+    firstName,
+    lastName,
     createdAt
   };
   const token = jwt.sign(payload, server.secret, {

@@ -14,27 +14,21 @@ import {
   PASSWORD_NOT_LONG_ENOUGH
 } from "./errors";
 
-export default ({
-  first_name,
-  last_name,
-  email,
-  password,
-  confirm_password
-}) => {
+export default ({ firstName, lastName, email, password, confirmPassword }) => {
   // Define an error object
   let errors: IRegistrationValidationError = {};
   // First and last names
-  if (isEmpty(first_name)) errors.firstNameEmpty = FIRST_NAME_EMPTY;
-  if (isEmpty(last_name)) errors.lastNameEmpty = LAST_NAME_EMPTY;
+  if (isEmpty(firstName)) errors.firstNameEmpty = FIRST_NAME_EMPTY;
+  if (isEmpty(lastName)) errors.lastNameEmpty = LAST_NAME_EMPTY;
   // Email
   if (isEmpty(email)) errors.emailEmpty = EMAIL_EMPTY;
   if (!emailRegex.test(email)) errors.emailNotValid = EMAIL_INVALID;
   // Password
   if (isEmpty(password)) errors.passwordEmpty = PASSWORD_EMPTY;
-  if (isEmpty(confirm_password))
+  if (isEmpty(confirmPassword))
     errors.confirmPasswordEmpty = CONFIRM_PASSWORD_EMPTY;
   if (password.length < 8) errors.passwordLength = PASSWORD_NOT_LONG_ENOUGH;
-  if (password !== confirm_password)
+  if (password !== confirmPassword)
     errors.passwordsNotMatching = PASSWORDS_NOT_MATCHING;
   // Return errors if any, else return false.
   if (Object.keys(errors).length > 0) {

@@ -13,18 +13,18 @@ const generateHandle = name => `${name}-${randomHandleNumber()}`;
 class ProfileController {
   public async create(req: IRequest, res: Response) {
     try {
-      const profile = await Profile.findOne({ user_id: req.user.id });
+      const profile = await Profile.findOne({ userID: req.user.id });
       if (profile)
         throw new CustomException(403, "You already have a profile.");
       const handle = generateHandle(
-        `${req.user.first_name
+        `${req.user.firstName
           .toLowerCase()
-          .replace(" ", "")}-${req.user.last_name
+          .replace(" ", "")}-${req.user.lastName
           .toLowerCase()
           .replace(" ", "")}`
       );
       const newProfile = await Profile.create({
-        user_id: req.user.id,
+        userID: req.user.id,
         handle,
         profilePicture: req.body.profilePicture,
         website: req.body.website,

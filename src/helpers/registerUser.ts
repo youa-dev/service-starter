@@ -7,8 +7,8 @@ export default async (email, name, password, clientID, callback) => {
     let credentials: any = {
       email,
       clientID,
-      first_name: name.givenName,
-      last_name: name.familyName
+      firstName: name.givenName,
+      lastName: name.familyName
     };
     // OAuth fallbacks
     credentials.password = hashPassword(

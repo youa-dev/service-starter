@@ -1,5 +1,5 @@
 export const testingKeys = {
-  auth: ["_id", "first_name", "last_name", "email", "createdAt"],
+  auth: ["_id", "firstName", "lastName", "email", "createdAt"],
   profile: [
     "profilePicture",
     "website",
@@ -10,26 +10,26 @@ export const testingKeys = {
     "biography",
     "followers",
     "_id",
-    "user_id",
+    "userID",
     "handle",
     "__v"
   ]
 };
 
 export const testingAccount = {
-  first_name: "Test",
-  last_name: "Account",
+  firstName: "Test",
+  lastName: "Account",
   email: "test_account@example.com",
   password: "test12345",
-  confirm_password: "test12345"
+  confirmPassword: "test12345"
 };
 
 export const editedAccount = {
-  first_name: "Edited",
-  last_name: "Account",
+  firstName: "Edited",
+  lastName: "Account",
   email: "edited_account@example.com",
   password: "12345test",
-  confirm_password: "12345test"
+  confirmPassword: "12345test"
 };
 
 export const testProfile = {

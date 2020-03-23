@@ -2,7 +2,7 @@ import { Schema } from "mongoose";
 import generator from "./model.generator";
 
 const schema = new Schema({
-  user_id: {
+  userID: {
     type: String,
     required: true,
     unique: true
