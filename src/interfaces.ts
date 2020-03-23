@@ -32,3 +32,17 @@ export interface IConnectionArguments {
   uris?: string;
   options?: object;
 }
+
+export interface IProfile extends Document {
+  profilePicture?: string;
+  website?: string;
+  github?: string;
+  linkedin?: string;
+  dev?: string;
+  stackoverflow?: string;
+  biography?: string;
+  followers?: string[];
+  id?: string;
+  userID?: string;
+  handle?: string;
+}

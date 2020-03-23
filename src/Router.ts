@@ -5,36 +5,38 @@ import ProfileController from "./controllers/Profile.controller";
 import validateInput from "./middleware/validateInput";
 
 class Router {
-  public API_ROUTER = express.Router();
+  public AUTH_ROUTER = express.Router();
+  public PROFILE_ROUTER = express.Router();
   constructor() {
-    this.setAPIEndpoints();
+    this.setAuthEndpoints();
+    this.setProfileEndpoints();
   }
-  private setAPIEndpoints(): void {
+  private setAuthEndpoints(): void {
     // Your API endpoints go here
-    this.API_ROUTER.post(
+    this.AUTH_ROUTER.post(
       "/auth/register",
       validateInput,
       AuthController.register
     );
-    this.API_ROUTER.post("/auth/login", validateInput, AuthController.login);
-    this.API_ROUTER.get(
+    this.AUTH_ROUTER.post("/auth/login", validateInput, AuthController.login);
+    this.AUTH_ROUTER.get(
       "/auth/me",
       passport.authenticate("jwt", { session: false }),
       AuthController.getCurrentUser
     );
-    this.API_ROUTER.put(
+    this.AUTH_ROUTER.put(
       "/auth/edit",
       passport.authenticate("jwt", { session: false }),
       validateInput,
       AuthController.edit
     );
-    this.API_ROUTER.delete(
+    this.AUTH_ROUTER.delete(
       "/auth/delete",
       passport.authenticate("jwt", { session: false }),
       AuthController.delete
     );
     // OAuth routes
-    this.API_ROUTER.get(
+    this.AUTH_ROUTER.get(
       "/oauth",
       passport.authenticate("google", {
         session: false,
@@ -44,7 +46,7 @@ class Router {
         ]
       })
     );
-    this.API_ROUTER.get(
+    this.AUTH_ROUTER.get(
       "/oauth/redirect",
       passport.authenticate("google", {
         session: false,
@@ -52,14 +54,35 @@ class Router {
       }),
       AuthController.generateJWTfromOAuth
     );
-    this.API_ROUTER.post(
+  }
+  private setProfileEndpoints(): void {
+    this.PROFILE_ROUTER.post(
       "/profile/create",
       passport.authenticate("jwt", { session: false }),
-      ProfileController.create
+      ProfileController.createProfile
+    );
+    this.PROFILE_ROUTER.get(
+      "/profile/get/:handle",
+      ProfileController.getProfile
+    );
+    this.PROFILE_ROUTER.put(
+      "/profile/edit",
+      passport.authenticate("jwt", { session: false }),
+      ProfileController.editProfile
+    );
+    this.PROFILE_ROUTER.patch(
+      "/profile/follow/:handle",
+      passport.authenticate("jwt", { session: false }),
+      ProfileController.followProfile
+    );
+    this.PROFILE_ROUTER.delete(
+      "/profile/delete",
+      passport.authenticate("jwt", { session: false }),
+      ProfileController.deleteProfile
     );
   }
 }
 
-const { API_ROUTER } = new Router();
+const { AUTH_ROUTER, PROFILE_ROUTER } = new Router();
 
-export { API_ROUTER };
+export { AUTH_ROUTER, PROFILE_ROUTER };

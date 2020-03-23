@@ -1,6 +1,7 @@
 import { Application } from "express";
-import { API_ROUTER } from "../Router";
+import { AUTH_ROUTER, PROFILE_ROUTER } from "../Router";
 
 export default (app: Application): void => {
-  app.use("/api", API_ROUTER);
+  app.use("/api/auth", AUTH_ROUTER);
+  app.use("/api/profile", PROFILE_ROUTER);
 };
