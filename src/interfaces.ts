@@ -22,6 +22,7 @@ export interface IUser extends Document {
   firstName?: string;
   lastName?: string;
   createdAt?: string;
+  profile?: any;
 }
 
 export interface IRequest extends Request {

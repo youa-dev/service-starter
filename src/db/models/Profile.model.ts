@@ -3,7 +3,7 @@ import generator from "./model.generator";
 
 const schema = new Schema({
   userID: {
-    type: String,
+    type: Schema.Types.ObjectId,
     required: true,
     unique: true
   },

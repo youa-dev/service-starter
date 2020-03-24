@@ -9,7 +9,7 @@ const opts: StrategyOptions = {
 
 export default new Strategy(opts, async ({ id }, done) => {
   try {
-    const user = await User.findById(id);
+    const user = await User.findById(id).populate("profile");
     if (!user) return done(null, false);
     return done(null, user);
   } catch (err) {

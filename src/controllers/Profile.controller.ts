@@ -1,10 +1,11 @@
-import { IProfile } from "./../interfaces";
+import { IProfile, IUser } from "./../interfaces";
 import { Request, Response } from "express";
 import { IRequest } from "../interfaces";
 import { server } from "../config";
 import Profile from "../db/models/Profile.model";
 import CustomException from "../helpers/CustomException";
 import generateHandle from "../helpers/generateHandle";
+import User from "../db/models/User.model";
 
 class ProfileController {
   public async createProfile(req: IRequest, res: Response) {
@@ -25,6 +26,9 @@ class ProfileController {
         stackoverflow: req.body.stackoverflow,
         biography: req.body.biography
       });
+      const user: IUser = await User.findById(req.user.id);
+      user.profile = newProfile.id;
+      await user.save();
       return res.status(200).json(newProfile);
     } catch (err) {
       return res.status(err.status || 500).json(err.message || err);

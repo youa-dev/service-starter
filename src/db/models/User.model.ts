@@ -26,6 +26,10 @@ const schema = new Schema({
   createdAt: {
     type: Date,
     default: Date.now
+  },
+  profile: {
+    type: Schema.Types.ObjectId,
+    ref: "profile"
   }
 });
 

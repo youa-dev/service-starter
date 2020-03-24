@@ -1,14 +1,13 @@
-import { IProfile } from "./../interfaces";
 import { Request, Response } from "express";
-import { IUser, IRequest } from "../interfaces";
+import { IUser, IRequest, IProfile } from "../interfaces";
 import { compareSync } from "bcrypt";
 import User from "../db/models/User.model";
-import Profile from "../db/models/Profile.model";
 import CustomException from "../helpers/CustomException";
 import hashPassword from "../helpers/hashPassword";
 import generateToken from "../helpers/generateToken";
 import registerUser from "../helpers/registerUser";
-import generateHandle from "src/helpers/generateHandle";
+import Profile from "../db/models/Profile.model";
+import generateHandle from "../helpers/generateHandle";
 
 class AuthController {
   public async register(req: Request, res: Response) {
@@ -54,16 +53,9 @@ class AuthController {
     }
   }
   public async getCurrentUser(req: IRequest, res: Response) {
-    const { id, email, firstName, lastName, createdAt } = req.user;
-    const profile = await Profile.findOne({ userID: id });
-    return res.status(200).json({
-      id,
-      email,
-      firstName,
-      lastName,
-      createdAt,
-      profile
-    });
+    // const { id, email, firstName, lastName, createdAt } = req.user;
+    // const profile = await Profile.findOne({ userID: id });
+    return res.status(200).json(req.user);
   }
   public async edit(req: IRequest, res: Response) {
     try {
@@ -75,13 +67,13 @@ class AuthController {
       user.lastName = lastName;
       user.email = email;
       user.password = hashPassword(password);
-      // Check if the user has a profile
-      const profile: IProfile = await Profile.findOne({ userID: req.user.id });
-      // If a profile exists, generate a new handle
-      if (profile) {
-        profile.handle = generateHandle(firstName, lastName);
-        await profile.save();
-      }
+      // // Check if the user has a profile
+      // const profile: IProfile = await Profile.findOne({ userID: req.user.id });
+      // // If a profile exists, generate a new handle
+      // if (profile) {
+      //   profile.handle = generateHandle(firstName, lastName);
+      //   await profile.save();
+      // }
       // Save and return
       user.save().then(updated => res.status(200).json(updated));
     } catch (err) {
