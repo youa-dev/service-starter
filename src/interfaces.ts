@@ -46,3 +46,24 @@ export interface IConnectionArguments {
   uris?: string;
   options?: ConnectionOptions;
 }
+
+export interface IProfileCreationValidationErrors {
+  websiteInvalid?: string;
+  githubInvalid?: string;
+  linkedinInvalid?: string;
+  devInvalid?: string;
+  stackoverflowInvalid?: string;
+  biographyInvalid?: string;
+}
+
+export interface IValidatorGenerator {
+  auth?: {
+    register: (object) => IRegistrationValidationError | false;
+    login: (object) => ILoginValidationError | false;
+    edit: (object) => IRegistrationValidationError | false;
+  };
+  profile?: {
+    register: (object) => IProfileCreationValidationErrors | false;
+    edit: (object) => IProfileCreationValidationErrors | false;
+  };
+}

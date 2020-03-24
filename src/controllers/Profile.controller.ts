@@ -21,6 +21,7 @@ class ProfileController {
       const newProfile = await Profile.create({
         _id: req.user.id,
         handle,
+        // TODO => Implement file uploads rather than using URLs
         profilePicture: req.body.profilePicture,
         website: req.body.website,
         github: req.body.github,

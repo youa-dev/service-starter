@@ -1,9 +1,9 @@
 import isEmpty from "../helpers/isEmpty";
 import emailRegex from "./emailRegex";
 import { ILoginValidationError } from "../interfaces";
+import { authErrors } from "./errors";
 
-// Error messages
-import { EMAIL_EMPTY, EMAIL_INVALID, PASSWORD_EMPTY } from "./errors";
+const { EMAIL_EMPTY, EMAIL_INVALID, PASSWORD_EMPTY } = authErrors;
 
 export default ({ email, password }) => {
   // Define an error object
