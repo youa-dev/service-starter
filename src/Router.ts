@@ -3,6 +3,7 @@ import passport from "passport";
 import AuthController from "./controllers/Auth.controller";
 import ProfileController from "./controllers/Profile.controller";
 import validateInput from "./middleware/validateInput";
+import normalizeInput from "./middleware/normalizeInput";
 
 class Router {
   public AUTH_ROUTER = express.Router();
@@ -13,7 +14,12 @@ class Router {
   }
   private setAuthEndpoints(): void {
     // Your API endpoints go here
-    this.AUTH_ROUTER.post("/register", validateInput, AuthController.register);
+    this.AUTH_ROUTER.post(
+      "/register",
+      normalizeInput,
+      validateInput,
+      AuthController.register
+    );
     this.AUTH_ROUTER.post("/login", validateInput, AuthController.login);
     this.AUTH_ROUTER.get(
       "/me",
@@ -23,6 +29,7 @@ class Router {
     this.AUTH_ROUTER.put(
       "/edit",
       passport.authenticate("jwt", { session: false }),
+      normalizeInput,
       validateInput,
       AuthController.edit
     );
