@@ -4,13 +4,7 @@ import { IRequest } from "../interfaces";
 import { server } from "../config";
 import Profile from "../db/models/Profile.model";
 import CustomException from "../helpers/CustomException";
-
-const randomHandleNumber = () =>
-  `${Math.floor(Math.random() * 10)}${Math.floor(
-    Math.random() * 10
-  )}${Math.floor(Math.random() * 10)}`;
-
-const generateHandle = name => `${name}-${randomHandleNumber()}`;
+import generateHandle from "../helpers/generateHandle";
 
 class ProfileController {
   public async createProfile(req: IRequest, res: Response) {
@@ -19,13 +13,7 @@ class ProfileController {
       const profile = await Profile.findOne({ userID: req.user.id });
       if (profile)
         throw new CustomException(403, "You already have a profile.");
-      const handle = generateHandle(
-        `${req.user.firstName
-          .toLowerCase()
-          .replace(" ", "")}-${req.user.lastName
-          .toLowerCase()
-          .replace(" ", "")}`
-      );
+      const handle = generateHandle(req.user.firstName, req.user.lastName);
       const newProfile = await Profile.create({
         userID: req.user.id,
         handle,
@@ -60,13 +48,7 @@ class ProfileController {
       });
       if (!profile)
         throw new CustomException(404, "You do not have a profile.");
-      const handle = generateHandle(
-        `${req.user.firstName
-          .toLowerCase()
-          .replace(" ", "")}-${req.user.lastName
-          .toLowerCase()
-          .replace(" ", "")}`
-      );
+      const handle = generateHandle(req.user.firstName, req.user.lastName);
       profile.handle = handle;
       profile.profilePicture = req.body.profilePicture;
       profile.website = req.body.website;
