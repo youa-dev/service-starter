@@ -10,7 +10,6 @@ export const testingKeys = {
     "biography",
     "followers",
     "_id",
-    "userID",
     "handle",
     "__v"
   ]
