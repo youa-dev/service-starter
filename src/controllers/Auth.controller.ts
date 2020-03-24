@@ -1,3 +1,4 @@
+import { IProfile } from "./../interfaces";
 import { Request, Response } from "express";
 import { IUser, IRequest } from "../interfaces";
 import { compareSync } from "bcrypt";
@@ -7,6 +8,7 @@ import CustomException from "../helpers/CustomException";
 import hashPassword from "../helpers/hashPassword";
 import generateToken from "../helpers/generateToken";
 import registerUser from "../helpers/registerUser";
+import generateHandle from "src/helpers/generateHandle";
 
 class AuthController {
   public async register(req: Request, res: Response) {
@@ -73,9 +75,15 @@ class AuthController {
       user.lastName = lastName;
       user.email = email;
       user.password = hashPassword(password);
+      // Check if the user has a profile
+      const profile: IProfile = await Profile.findOne({ userID: req.user.id });
+      // If a profile exists, generate a new handle
+      if (profile) {
+        profile.handle = generateHandle(firstName, lastName);
+        await profile.save();
+      }
       // Save and return
-      await user.save();
-      return res.status(200).json(user);
+      user.save().then(updated => res.status(200).json(updated));
     } catch (err) {
       return res.status(err.status || 500).json(err.message || err);
     }
