@@ -11,12 +11,15 @@ class ProfileController {
   public async createProfile(req: IRequest, res: Response) {
     // TODO: Input validation
     try {
-      const profile = await Profile.findOne({ userID: req.user.id });
+      const [user, profile]: [IUser, IProfile] = await Promise.all([
+        User.findById(req.user.id),
+        Profile.findById(req.user.id)
+      ]);
       if (profile)
         throw new CustomException(403, "You already have a profile.");
       const handle = generateHandle(req.user.firstName, req.user.lastName);
       const newProfile = await Profile.create({
-        userID: req.user.id,
+        _id: req.user.id,
         handle,
         profilePicture: req.body.profilePicture,
         website: req.body.website,
@@ -26,10 +29,8 @@ class ProfileController {
         stackoverflow: req.body.stackoverflow,
         biography: req.body.biography
       });
-      const user: IUser = await User.findById(req.user.id);
       user.profile = newProfile.id;
-      await user.save();
-      return res.status(200).json(newProfile);
+      user.save().then(() => res.status(200).json(newProfile));
     } catch (err) {
       return res.status(err.status || 500).json(err.message || err);
     }
@@ -47,13 +48,10 @@ class ProfileController {
   public async editProfile(req: IRequest, res: Response) {
     // TODO: Input validation
     try {
-      const profile: IProfile = await Profile.findOne({
-        userID: req.user.id
-      });
+      const profile: IProfile = await Profile.findById(req.user.id);
       if (!profile)
         throw new CustomException(404, "You do not have a profile.");
-      const handle = generateHandle(req.user.firstName, req.user.lastName);
-      profile.handle = handle;
+      profile.handle = generateHandle(req.user.firstName, req.user.lastName);
       profile.profilePicture = req.body.profilePicture;
       profile.website = req.body.website;
       profile.github = req.body.github;
@@ -92,9 +90,7 @@ class ProfileController {
     }
   }
   public deleteProfile(req: IRequest, res: Response) {
-    Profile.findOne({
-      userID: req.user.id
-    }).then(profile => {
+    Profile.findById(req.user.id).then(profile => {
       profile.remove();
       return res.status(200).json({ deleted: true, timestamp: Date.now() });
     });

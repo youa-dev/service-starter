@@ -53,9 +53,10 @@ class AuthController {
     }
   }
   public async getCurrentUser(req: IRequest, res: Response) {
-    // const { id, email, firstName, lastName, createdAt } = req.user;
-    // const profile = await Profile.findOne({ userID: id });
-    return res.status(200).json(req.user);
+    const { id, email, firstName, lastName, createdAt, profile } = req.user;
+    return res
+      .status(200)
+      .json({ id, email, firstName, lastName, createdAt, profile });
   }
   public async edit(req: IRequest, res: Response) {
     try {
@@ -67,13 +68,13 @@ class AuthController {
       user.lastName = lastName;
       user.email = email;
       user.password = hashPassword(password);
-      // // Check if the user has a profile
-      // const profile: IProfile = await Profile.findOne({ userID: req.user.id });
-      // // If a profile exists, generate a new handle
-      // if (profile) {
-      //   profile.handle = generateHandle(firstName, lastName);
-      //   await profile.save();
-      // }
+      // Check if the user has a profile
+      if (req.user.profile) {
+        // If a profile exists, generate a new handle
+        const profile: IProfile = await Profile.findById(req.user.id);
+        profile.handle = generateHandle(req.user.firstName, req.user.lastName);
+        await profile.save();
+      }
       // Save and return
       user.save().then(updated => res.status(200).json(updated));
     } catch (err) {

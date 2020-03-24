@@ -2,11 +2,7 @@ import { Schema } from "mongoose";
 import generator from "./model.generator";
 
 const schema = new Schema({
-  userID: {
-    type: Schema.Types.ObjectId,
-    required: true,
-    unique: true
-  },
+  _id: Schema.Types.ObjectId,
   handle: {
     type: String,
     required: true,
