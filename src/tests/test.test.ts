@@ -14,8 +14,8 @@ afterEach(function() {
 
 after(() => server.stop(error));
 
-describe("Example test", () => {
-  it("should return 2", () => {
-    expect(1 + 1).to.eq(2);
+describe("Sample Test:", () => {
+  it("2 + 2 should equal 4", () => {
+    expect(2 + 2).to.eq(4);
   });
 });
