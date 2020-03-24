@@ -74,7 +74,7 @@ class ProfileController {
       if (!profile) throw new CustomException(404, "Profile not found.");
       // Allow while in test environment -> Check if the user is trying to follow it's own account.
       if (server.env !== "test") {
-        if (profile.userID === req.user.id)
+        if (profile.id === req.user.id)
           throw new CustomException(400, "You cannot follow your own profile.");
       }
       // Iterate over followers, then handle the request
