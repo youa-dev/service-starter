@@ -39,7 +39,7 @@ const schema = new Schema({
   },
   followers: [
     {
-      type: String
+      type: Schema.Types.ObjectId
     }
   ]
 });
