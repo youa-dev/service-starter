@@ -63,7 +63,7 @@ export interface IValidatorGenerator {
     edit: (object) => IRegistrationValidationError | false;
   };
   profile?: {
-    register: (object) => IProfileCreationValidationErrors | false;
+    create: (object) => IProfileCreationValidationErrors | false;
     edit: (object) => IProfileCreationValidationErrors | false;
   };
 }

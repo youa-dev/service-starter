@@ -62,12 +62,14 @@ class Router {
     this.PROFILE_ROUTER.post(
       "/create",
       passport.authenticate("jwt", { session: false }),
+      validateInput,
       ProfileController.createProfile
     );
     this.PROFILE_ROUTER.get("/get/:handle", ProfileController.getProfile);
     this.PROFILE_ROUTER.put(
       "/edit",
       passport.authenticate("jwt", { session: false }),
+      validateInput,
       ProfileController.editProfile
     );
     this.PROFILE_ROUTER.patch(

@@ -14,7 +14,14 @@ const {
   PASSWORD_NOT_LONG_ENOUGH
 } = authErrors;
 
+const avoidValidating = ["profilePicture", "followers", "_id", "handle", "__v"];
+
 export default body => {
   let errors: IProfileCreationValidationErrors = {};
+  // Filter out the keys that require no validation
+  const keys = Object.keys(body).filter(key => {
+    if (!avoidValidating.includes(key)) return key;
+  });
+  // Just return the keys for the sake of testing
   return Object.keys(errors).length > 0 ? errors : false;
 };
