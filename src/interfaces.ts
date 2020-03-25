@@ -53,7 +53,6 @@ export interface IProfileCreationValidationErrors {
   linkedinInvalid?: string;
   devInvalid?: string;
   stackoverflowInvalid?: string;
-  biographyInvalid?: string;
 }
 
 export interface IValidatorGenerator {

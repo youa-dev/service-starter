@@ -1,20 +1,16 @@
 import isEmpty from "../helpers/isEmpty";
 import urlRegex from "./urlRegex";
 import { IProfileCreationValidationErrors } from "../interfaces";
-import { authErrors } from "./errors";
+import { profileErrors } from "./errors";
 
-const {
-  CONFIRM_PASSWORD_EMPTY,
-  EMAIL_EMPTY,
-  EMAIL_INVALID,
-  FIRST_NAME_EMPTY,
-  LAST_NAME_EMPTY,
-  PASSWORDS_NOT_MATCHING,
-  PASSWORD_EMPTY,
-  PASSWORD_NOT_LONG_ENOUGH
-} = authErrors;
-
-const avoidValidating = ["profilePicture", "followers", "_id", "handle", "__v"];
+const avoidValidating = [
+  "profilePicture",
+  "followers",
+  "_id",
+  "handle",
+  "__v",
+  "biography"
+];
 
 export default body => {
   let errors: IProfileCreationValidationErrors = {};
@@ -22,6 +18,21 @@ export default body => {
   const keys = Object.keys(body).filter(key => {
     if (!avoidValidating.includes(key)) return key;
   });
-  // Just return the keys for the sake of testing
+  keys.forEach(key => {
+    const url: string = body[key];
+    /**
+     * If the user provides an empty string,
+     * just break out of the loop.
+     * Otherwise, validate the input.
+     */
+    if (
+      !isEmpty(url) &&
+      !(
+        urlRegex.test(url) &&
+        url.includes(`${url}.${url === "dev" ? "to" : "com"}`)
+      )
+    )
+      errors[`${url}Invalid`] = profileErrors[`${url.toUpperCase()}_INVALID`];
+  });
   return Object.keys(errors).length > 0 ? errors : false;
 };
