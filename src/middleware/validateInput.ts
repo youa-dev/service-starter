@@ -7,6 +7,5 @@ export default (req: Request, res: Response, next: NextFunction) => {
     .split("/");
   const validator = validatorGenerator(router);
   const inputErrors = validator[method](req.body);
-  console.log(inputErrors);
   inputErrors ? res.status(500).json(inputErrors) : next();
 };
