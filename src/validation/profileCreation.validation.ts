@@ -15,24 +15,11 @@ const avoidValidating = [
 export default body => {
   let errors: IProfileCreationValidationErrors = {};
   // Filter out the keys that require no validation
-  const keys = Object.keys(body).filter(key => {
-    if (!avoidValidating.includes(key)) return key;
-  });
+  const keys = Object.keys(body).filter(k => !avoidValidating.includes(k));
   keys.forEach(key => {
-    const url: string = body[key];
-    /**
-     * If the user provides an empty string,
-     * just break out of the loop.
-     * Otherwise, validate the input.
-     */
-    if (
-      !isEmpty(url) &&
-      !(
-        urlRegex.test(url) &&
-        url.includes(`${url}.${url === "dev" ? "to" : "com"}`)
-      )
-    )
-      errors[`${url}Invalid`] = profileErrors[`${url.toUpperCase()}_INVALID`];
+    const val: string = body[key];
+    if (!isEmpty(val) && !urlRegex.test(val))
+      errors[`${key}Invalid`] = profileErrors[`${key.toUpperCase()}_INVALID`];
   });
   return Object.keys(errors).length > 0 ? errors : false;
 };
