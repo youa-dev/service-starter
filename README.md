@@ -1,5 +1,5 @@
 ## youa.dev
-### User Service
+### Service Starter Template
 
 ---
 
@@ -9,7 +9,7 @@
 
 ### About:
 
-This service handles user account and profile creation, editing, authorization, authentication and everything related.
+This is the template that will be used to generate new services.
 
 ---
 

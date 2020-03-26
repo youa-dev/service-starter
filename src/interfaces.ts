@@ -1,20 +1,6 @@
 import { Request } from "express";
 import { Document, ConnectionOptions } from "mongoose";
 
-export interface ILoginValidationError {
-  emailEmpty?: String;
-  emailNotValid?: String;
-  passwordEmpty?: String;
-}
-
-export interface IRegistrationValidationError extends ILoginValidationError {
-  firstNameEmpty?: String;
-  lastNameEmpty?: String;
-  confirmPasswordEmpty?: String;
-  passwordLength?: String;
-  passwordsNotMatching?: String;
-}
-
 export interface IProfile extends Document {
   profilePicture?: string;
   website?: string;
@@ -47,22 +33,4 @@ export interface IConnectionArguments {
   options?: ConnectionOptions;
 }
 
-export interface IProfileCreationValidationErrors {
-  websiteInvalid?: string;
-  githubInvalid?: string;
-  linkedinInvalid?: string;
-  devInvalid?: string;
-  stackoverflowInvalid?: string;
-}
-
-export interface IValidatorGenerator {
-  auth?: {
-    register: (object) => IRegistrationValidationError | false;
-    login: (object) => ILoginValidationError | false;
-    edit: (object) => IRegistrationValidationError | false;
-  };
-  profile?: {
-    create: (object) => IProfileCreationValidationErrors | false;
-    edit: (object) => IProfileCreationValidationErrors | false;
-  };
-}
+export interface IValidatorGenerator {}
