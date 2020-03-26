@@ -1,6 +1,6 @@
 import isEmpty from "../helpers/isEmpty";
-import emailRegex from "./emailRegex";
 import { ILoginValidationError } from "../interfaces";
+import { emailRegex } from "./regex";
 import { authErrors } from "./errors";
 
 const { EMAIL_EMPTY, EMAIL_INVALID, PASSWORD_EMPTY } = authErrors;

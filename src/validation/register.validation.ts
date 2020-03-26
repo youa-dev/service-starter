@@ -1,5 +1,5 @@
 import isEmpty from "../helpers/isEmpty";
-import emailRegex from "./emailRegex";
+import { emailRegex } from "./regex";
 import { IRegistrationValidationError } from "../interfaces";
 import { authErrors } from "./errors";
 

@@ -1,5 +1,5 @@
 import isEmpty from "../helpers/isEmpty";
-import urlRegex from "./urlRegex";
+import { urlRegex } from "./regex";
 import { IProfileCreationValidationErrors } from "../interfaces";
 import { profileErrors } from "./errors";
 
