@@ -12,6 +12,4 @@ class Router {
   }
 }
 
-const { ROUTER } = new Router();
-
-export { ROUTER };
+export default new Router().ROUTER;
